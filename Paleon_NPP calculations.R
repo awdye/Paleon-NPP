@@ -1,4 +1,5 @@
 library(dplR)
+install.packages("dplR", repos = "http://R-Forge.R-project.org") #has new code for treating edge zeros
 library(sp)
 
 #Note: this script is set up for Lyford tree ring data. The basic framework will be used across all PalEON sites
