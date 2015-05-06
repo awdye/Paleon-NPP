@@ -1,6 +1,5 @@
-par(mfrow=c(3,1))
-par(cex.lab=1.6)
-par(mar=c(5,5,4,2))
+
+#Script for plotting biomass and census data
 
 bioSp<-read.csv("bioSpecies.csv")
 bioSpPlot<-read.csv()
@@ -201,8 +200,7 @@ bioSpPlot<-subset(bioSp,(bioSp$year==2010&(bioSp$site=="HOW1"|bioSp$site=="HOW2"
                                              bioSp$site=="LF2"|bioSp$site=="LF3"))|(bioSp$year==1999&(bioSp$site=="1301"|
                                                                                                         bioSp$site=="1302"|bioSp$site=="1303"|bioSp$site=="1304"|bioSp$site
 write.csv(bioSpPlot,file="bioSpPlot.csv")                                                                                                   =="1305"|bioSp$site=="1306")))
-#write.csv(bioSpPlot,file="dendroSpStBioFinalCenDate.csv")
-#bioSpPlot<-read.csv("dendroSpStBioFinalCenDate.csv")
+
 
 
 allPlot.how<-subset(bioSpPlot,bioSpPlot$plot=="HOW1"|bioSpPlot$plot=="HOW2"|bioSpPlot$plot=="HOW3")
@@ -306,22 +304,9 @@ lyf.field.data<-read.csv("LyfordAllPlots.csv",header=TRUE)
 allPlot.fer<-subset(bioSpPlot,bioSpPlot$plot=="1301"|bioSpPlot$plot=="1302"|bioSpPlot$plot=="1303"|
                                               bioSpPlot$plot=="1304"|bioSpPlot$plot=="1305"|bioSpPlot$plot=="1306")
 
-ferCen2<-subset(ferCen,ferCen$year==1999)
-ferCen2$site<-"Fernow"
-ferCen2$rel.freq<-ferCen2$freq/sum(ferCen2$freq)
 
 
 
-#AB fit line
 
-ggplot(howsubMean,aes(year,AB))+geom_smooth(method=lm,se=FALSE)+
-  geom_smooth(data=HowDrawsMean,aes(year,AB),method=lm,se=FALSE,color="red")+
-  geom_smooth(data=HowNPP,aes(year,meanAB),method=lm,se=FALSE,color="orange")+
-  geom_point(data=HowNPP,aes(year,meanAB))+
-  scale_x_continuous(limits=c(1985,2013))+
-  geom_smooth(data=LyfDrawsMean,aes(year,AB),method=lm,se=FALSE,color="burlywood")+
-  geom_smooth(data=lyfsubMean,aes(year,AB),method=lm,se=FALSE,color="green")+
-  geom_smooth(data=LyfordNPP,aes(year,meanAB),method=lm,se=FALSE,color="black")+
-  geom_smooth(data=fersubMean,aes(year,AB),method=lm,se=FALSE,color="grey")+
-  geom_smooth(data=ferNPP,aes(year,meanAB),method=lm,se=FALSE,color="yellow")
+
 
