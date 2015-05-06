@@ -1,4 +1,4 @@
-#FUNCTIONS:
+#Scripts for functions used in NPP analysis:
 
 bioNest<-function(x){
   convHA <- 10000/(pi*(c(13,20)^2))
