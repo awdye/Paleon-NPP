@@ -2,6 +2,8 @@ library(dplR)
 install.packages("dplR", repos = "http://R-Forge.R-project.org") #has new code for treating edge zeros
 library(sp)
 
+#Example script for how to deal with NPP data from tree rings
+
 #Note: this script is set up for Lyford tree ring data. The basic framework will be used across all PalEON sites
 #with some small changes. I tried to indicate where these changes are most likely to occur and areas of confusion.
 #code contributors Dario Martin-Benito, Alex Dye, Dan Bishop
