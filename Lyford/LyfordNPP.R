@@ -1,3 +1,5 @@
+#Script for Lyford tree ring NPP
+
 library(dplR)
 library(sp)
 

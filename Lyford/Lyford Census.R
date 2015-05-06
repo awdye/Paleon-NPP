@@ -1,3 +1,5 @@
+#Script for dealing with Lyford census data
+
 Lyf.cen<-read.csv("Lyford raw census.csv",header=TRUE)
 Lyf.cen$dbh69<-ifelse(Lyf.cen$can69=="NA", 0,Lyf.cen$dbh69) #run for AB
 Lyf.cen$dbh69<-as.numeric(as.character(Lyf.cen$dbh69)) #run for AB
