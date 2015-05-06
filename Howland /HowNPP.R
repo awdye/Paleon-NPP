@@ -1,3 +1,5 @@
+#Script for Howland tree ring NPP
+
 library(dplR)
 library(sp)
 library(foreign)
