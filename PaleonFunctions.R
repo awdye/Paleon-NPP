@@ -106,16 +106,6 @@ totAB<-function(x){
   return(Total.ha)
 }
 
-#resample raw intervals
-rawAB<-function(x){
-  rawTotal<-aggregate(x$AB,by=list(year=x$year),mean)
-  colnames(rawTotal)<-c("year","AB")
-  rawTotal$year<-as.numeric(as.character(rawTotal$year))
-  rawAB<-(rawTotal$AB[-1]-rawTotal$AB[-length(rawTotal$AB)])
-  rawAB<-c(rawAB[1],rawAB)
-  rawTotal$rawAB<-rawAB
-  return(rawTotal)
-}
 
 censusAB<-function(x){
   AB<-melt(data=x,id=c("plot"),measure=c("1989","1998","2002","2010"))
@@ -143,13 +133,3 @@ censusAB<-function(x){
   return(Total.ha)
 }
 
-
-
-
-plotSp<-function(x){
-  
-}
-  
-  
-  
-  
