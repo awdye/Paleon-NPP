@@ -18,22 +18,7 @@ lyf.field.data<-read.table("LyfordAllPlots.csv", header=T,sep=",")
   #Add equations as necessary
   #see Ter-Mikealian & Korzhukin 1997 or Jenkins 2004 for comprehensive list of species eqs and references
 bm.eqs<-read.table("biomass_coeff.csv", header=T,sep=",")
-
-#Step 2: Create sub classes for nested plots
-
-  #Create distance class based on 13,20,and 30m nests. Only relevant for nested plots
-lyf.field.data$distclass<-cut(lyf.field.data$Distance,breaks=c(0,12.999,19.999,99.999), right=T,
-                             labels=c(13,20,30),include.lowest=T)
   
-  #Designate conversion from m2 area to hectare (10000/pi*r2)
-  #Distance breaks are 0-12.999m, 13-19.999m, and <20m
-  #Distance breaks commented out for Lyford since there are no nests
-#lyf.field.data$convha<-cut(lyf.field.data$Distance,breaks=c(0.000,12.999,19.999,99.999), right=T,
- #                         labels=10000/(pi*(c(13,20,30)^2)), include.lowest=T) 
-lyf.field.data$convha<-as.numeric(as.character(lyf.field.data$convha))
-  #Used this for Lyford for simplicity since no nests:
-lyf.field.data$convha<-10000/(pi*(13)^2)
-
 
 #Step 3:Read in ring width files. RW files are in Tucson format, .001 precision.
 setwd("C:/Paleon/Lyford/Lyford_Data_13m/RW/Combined")
@@ -121,15 +106,6 @@ ab.lyf.all$annAB.ha<-ab.lyf.all$annAB*ab.lyf.all$convha
 ab.lyf.all$AB.ha<-ab.lyf.all$AB*ab.lyf.all$convha
 
 
-#Calculates total biomass per ha and number of trees
-#first we need to define two basic functions
-sum.fn<-function(x) sum(x, na.rm=TRUE)
-count.fn<-function(x) length(unique(x, na.rm=TRUE))
-n.trees<-data.frame(tapply(X=ab.lyf.all$Tree.Number,INDEX=list(ab.lyf.all$year,ab.lyf.all$Site),count.fn))
-n.trees$year<-as.numeric(as.character(row.names(n.trees)))
-plot(n.trees[,5])
-n.trees[is.na(n.trees)]=0
-
 #ab.lyf.site data frame splits annAB.ha measurements between each site
 #LyfordMean column is the average annAB of all 3 sites.
 ab.lyf.site<-data.frame(tapply(X=ab.lyf.all$annAB.ha,INDEX=list(ab.lyf.all$year,ab.lyf.all$Site),sum.fn))
@@ -138,27 +114,4 @@ ab.lyf.site[is.na(ab.lyf.site)]=0
 ab.lyf.site$LyfordMean<-(ab.lyf.site$LF1+ab.lyf.site$LF2+ab.lyf.site$LF3)/3
 ab.lyf.site<-subset(ab.lyf.site,year>=1960&year<=2011)
 
-#simple plot of census data versus dendro site data. 
-plot(lyf.census.data$Year,lyf.census.data$annAB.ha,type="o",lwd=3, xlim=c(1960,2013),ylim=(c(0,6)),ylab="Mg/ha/yr", xlab="year")
-par(new=TRUE)
-plot(ab.lyf.site$year,ab.lyf.site$LyfordMean, type="l",lwd=3, xlim=c(1960,2013),ylim=(c(0,6)),ylab="Mg/ha/yr", xlab="year")
 
-#function for adjusting biomass/hectare calculation based on each subplot
-#written by Dan Bishop
-#for now, biomass/ha calculations for each subplot are being averaged for a plot total
-bioNest<-function(x){
-  convHA <- 10000/(pi*(c(13,20)^2))
-  nestDBH <- c(10,20)
-  nestDist <- c(13,20)
-  years <- rep(sort(unique(x$year)),3)
-  sites <- rep(unique(x$site),each=length(years)/3)
-  plotBio <- data.frame(years,sites)
-  for(i in 1:2){
-    plotHec <- aggregate(x$annAB[x$dbh>=nestDBH[i] & x$distclass<=nestDist[i]],by=list(x$year[x$dbh>=nestDBH[i] & x$distclass<=nestDist[i]],x$site[x$dbh>=nestDBH[i] & x$distclass<=nestDist[i]]),sum,na.rm=TRUE)
-    names(plotHec) <- c('years',"sites",paste(c("annAB.ha",i),collapse=""))
-    plotHec[,3] <- plotHec[,3]*convHA[i]
-    
-    plotBio <- merge(plotBio,plotHec,by=intersect(names(plotBio),names(plotHec)),all.x=TRUE)
-  }
-  return(plotBio)
-}
