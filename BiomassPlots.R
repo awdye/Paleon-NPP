@@ -207,8 +207,8 @@ allPlot.how<-subset(bioSpPlot,bioSpPlot$plot=="HOW1"|bioSpPlot$plot=="HOW2"|bioS
 allPlot.how<-aggregate(AB~species+plot,data=allPlot.how,sum)
 
 #pie chart:
-cbPalette <- c("#F0E442", "#E69F00", "#999999", "#CC79A7", "#D55E00", "#0072B2", "forestgreen")
-palette2<-c("#F0E442", "#E69F00", "#999999", "#CC79A7", "#D55E00","goldenrod4", "#0072B2", "#009E73")
+cbPalette <- c("#F0E442", "#E69F00", "#999999", "#0072B2", "forestgreen", "#CC79A7", "#D55E00")
+palette2<-c("#F0E442", "goldenrod4","#E69F00", "#999999", "#0072B2","forestgreen", "#CC79A7", "#D55E00")
 ggplot(bioSpPlot,aes(x=PlotAB/2,y=AB,fill=factor(species),width=PlotAB),color=NA)+
   geom_bar(stat="identity",position="fill")+
   coord_polar(theta="y")+
@@ -239,8 +239,10 @@ bioSpPlot4<-merge(bioSpPlot3,StandingBio,by="plot")
 
 #changing order of factors in "plot" variable allows me to manually change order of ggplot facets
 neworder<-c("HOW1","HOW2","HOW3","LYF1","LYF2","LYF3","FER1301","FER1302","FER1303","FER1304","FER1305","FER1306")
+neworder2<-c("Howland","Lyford","Fernow")
 library("plyr")
 bioSpPlot<-arrange(transform(bioSpPlot,plot=factor(plot,neworder)),plot)
+CenSpAll2<-arrange(transform(CenSpAll2,site=factor(site,neworder2)),site)
 
 
 #Diameter distributions:
