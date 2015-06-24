@@ -116,4 +116,6 @@ ab.lyf.site[is.na(ab.lyf.site)]=0
 ab.lyf.site$LyfordMean<-(ab.lyf.site$LF1+ab.lyf.site$LF2+ab.lyf.site$LF3)/3
 ab.lyf.site<-subset(ab.lyf.site,year>=1960&year<=2011)
 
+#for nested plots, see PaleonFunctions.R script and use bioNest functions
+
 
