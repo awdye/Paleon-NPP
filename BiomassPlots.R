@@ -1,5 +1,6 @@
 
 #Script for plotting biomass and census data
+#code by AD, may not be directly relevant for all sites/intentions
 
 bioSp<-read.csv("bioSpecies.csv")
 bioSpPlot<-read.csv()
